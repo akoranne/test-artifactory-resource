@@ -1,0 +1,81 @@
+resource_types:
+- name: artifactory/resource
+  type: docker-image
+  source:
+    repository: springio/artifactory-resource
+    tag: 0.0.5-SNAPSHOT
+
+resources:
+- name: git-repo
+  type: git
+  source:
+    uri: https://github.com/akoranne/test-artifactory-resource
+    branch: master
+- name: artifactory
+  type: artifactory-resource
+  source:
+    uri: http://artifactory:8081/artifactory
+    username: admin
+    password: password
+    build_name: my-project-build
+
+jobs:
+- name: build-and-save-to-artifactory
+  serial: true
+  public: true
+  plan:
+  - get: git-repo
+    trigger: true
+  - task: build-file
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+          tag: "latest"
+      outputs:
+      - name: build
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          export DATESTRING=$(date +"%Y%m%d")
+          echo "This is my file" > ./build/myapp-$(date +"%Y%m%d%H%S").txt
+          echo "#sample manifest" > ./build/manifest.yml
+          find .
+  - put: artifactory
+    params:
+      repo: libs-snapshot-local
+      build_number: "${BUILD_ID}"
+      folder: test
+      build_uri: "{{CONCOURSE_URI}}/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}"
+- name: test
+  serial: true
+  public: true
+  plan:
+  - get: artifactory
+    trigger: true
+    passed:
+      - build-and-save-to-artifactory
+  - task: use-new-file
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+          tag: "latest"
+      inputs:
+      - name: file-repository
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          export DATESTRING=$(date +"%Y%m%d")
+          ls -la file-repository
+          cat ./file-repository/myapp*.txt
+          echo ""
+          cat ./file-repository/manifest.yml

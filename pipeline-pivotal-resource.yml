@@ -1,0 +1,69 @@
+resource_types:
+- name: artifactory
+  type: docker-image
+  source:
+    repository: pivotalservices/artifactory-resource
+
+resources:
+- name: file-repository
+  type: artifactory
+  check_every: 1m
+  source:
+    endpoint: http://artifactory:8081/artifactory
+    repository: "/repository-name/sub-folder"
+    regex: "myapp-(?<version>.*).txt"
+    username: admin
+    password: password
+
+jobs:
+- name: build-and-save-to-artifactory
+  serial: true
+  public: true
+  plan:
+  - task: build-file
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+          tag: "latest"
+      outputs:
+      - name: build
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          export DATESTRING=$(date +"%Y%m%d")
+          echo "This is my file" > ./build/myapp-$(date +"%Y%m%d%H%S").txt
+          find .
+  - put: file-repository
+    params: { file: ./build/myapp-*.txt }
+
+- name: trigger-when-new-file-is-added-to-artifactory
+  serial: true
+  public: true
+  plan:
+  - get: file-repository
+    trigger: true
+    passed:
+      - build-and-save-to-artifactory
+  - task: use-new-file
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+          tag: "latest"
+      inputs:
+      - name: file-repository
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          export DATESTRING=$(date +"%Y%m%d")
+          ls -la file-repository
+          cat ./file-repository/myapp*.txt
