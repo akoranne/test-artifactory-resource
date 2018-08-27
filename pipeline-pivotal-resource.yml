@@ -10,7 +10,7 @@ resources:
   check_every: 1m
   source:
     endpoint: http://artifactory:8081/artifactory
-    repository: "/repository-name/sub-folder"
+    repository: "/libs-snapshot-local/piv-res"
     regex: "myapp-(?<version>.*).txt"
     username: admin
     password: password
