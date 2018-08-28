@@ -1,4 +1,4 @@
-# Artifactory Resource
+# Test Artifactory Resource
 
 Deploys and retrieves artifacts from a JFrog Artifactory server for a Concourse pipeline.
 
