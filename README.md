@@ -2,9 +2,7 @@
 
 Deploys and retrieves artifacts from a JFrog Artifactory server for a Concourse pipeline.
 
-## Setup Docker
-
-1. Generate keys
+1. Generate keys for docker compose
 ```
    $> cd docker
    $> ./generate-keys.sh
