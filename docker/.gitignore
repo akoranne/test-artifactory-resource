@@ -1,0 +1,5 @@
+keys/*
+bin/*
+!bin/.gitkeep
+.DS_Store
+.envrc
