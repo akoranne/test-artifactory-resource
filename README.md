@@ -20,15 +20,15 @@ Deploys and retrieves artifacts from a JFrog Artifactory server for a Concourse 
 ```
 
 3. Access Concourse and Artifactory
-  * Artifactory:  http://localhost:8001/artifactory/webapp
-    - Creds: admin / password
-  * Concourse:    http://localhost:8080
+    * Artifactory:  http://localhost:8001/artifactory/webapp
+      - Creds: admin / password
+    * Concourse:    http://localhost:8080
 
 4. Deploy the pipeline(s)
-  * __pipeline-pivotal-resource__
-    - This pipeline uses [pivotalservices/artifactory-resource](https://github.com/pivotalservices/artifactory-resource)
-  * __pipeline-springio-resource__
-    - This pipeline uses [spring-io/artifactory-resource](https://github.com/spring-io/artifactory-resource)
+    * __pipeline-pivotal-resource__
+      - This pipeline uses [pivotalservices/artifactory-resource](https://github.com/pivotalservices/artifactory-resource)
+    * __pipeline-springio-resource__
+      - This pipeline uses [spring-io/artifactory-resource](https://github.com/spring-io/artifactory-resource)
 
 
 
