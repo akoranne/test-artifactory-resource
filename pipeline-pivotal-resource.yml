@@ -10,15 +10,13 @@ resources:
   check_every: 1m
   source:
     endpoint: http://artifactory:8081/artifactory
-    repository: "/libs-snapshot-local/piv-res"
+    repository: "/example-repo-local/piv-res"
     regex: "myapp-(?<version>.*).txt"
     username: admin
     password: password
 
 jobs:
 - name: build-and-save-to-artifactory
-  serial: true
-  public: true
   plan:
   - task: build-file
     config:

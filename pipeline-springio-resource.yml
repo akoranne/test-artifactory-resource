@@ -1,5 +1,5 @@
 resource_types:
-- name: artifactory/resource
+- name: artifactory-resource
   type: docker-image
   source:
     repository: springio/artifactory-resource
@@ -47,10 +47,10 @@ jobs:
           find .
   - put: artifactory
     params:
-      repo: libs-snapshot-local
+      repo: example-repo-local
       build_number: "${BUILD_ID}"
-      folder: test
-      build_uri: "{{CONCOURSE_URI}}/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}"
+      folder: "springio-res"
+      build_uri: "http://localhost:8080/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}"
 - name: test
   serial: true
   public: true
