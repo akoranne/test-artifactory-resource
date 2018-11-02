@@ -21,6 +21,7 @@ Deploys and retrieves artifacts from a JFrog Artifactory server for a Concourse 
     * Artifactory:  http://localhost:8001/artifactory/webapp
       - Creds: admin / password
     * Concourse:    http://localhost:8080
+		- Creds: test / test
 
 4. Deploy the pipeline(s)
     * __pipeline-pivotal-resource__
