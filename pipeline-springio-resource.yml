@@ -49,7 +49,9 @@ jobs:
     params:
       repo: example-repo-local
       build_number: "${BUILD_ID}"
-      folder: "springio-res"
+      folder: build
+      module_layout: none
+      strip_snapshot_timestamps: false
       build_uri: "http://localhost:8080/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}"
 - name: test
   serial: true
