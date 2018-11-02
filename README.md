@@ -10,7 +10,7 @@ Deploys and retrieves artifacts from a JFrog Artifactory server for a Concourse 
 
 2. Run docker compose
 ```
-  $> docker-compose -f docker-compose-artifactory.yml start
+  $> docker-compose -f docker-compose-artifactory.yml up
   Starting artifactory      ... done
   Starting concourse-db     ... done
   Starting concourse-web    ... done
