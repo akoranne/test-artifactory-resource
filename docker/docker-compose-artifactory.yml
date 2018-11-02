@@ -31,7 +31,7 @@ services:
       - concourse
 
   concourse-web:
-    image: concourse/concourse:3.14.1
+    image: concourse/concourse:4.2.1
     command: web
     links: [concourse-db]
     depends_on: [concourse-db]
@@ -50,7 +50,7 @@ services:
       - concourse
 
   concourse-worker:
-    image: concourse/concourse:3.14.1
+    image: concourse/concourse:4.2.1
     command: worker
     privileged: true
     links: [concourse-web, artifactory]
