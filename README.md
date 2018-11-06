@@ -10,7 +10,7 @@ Deploys and retrieves artifacts from a JFrog Artifactory server for a Concourse 
 
 2. Run docker compose
 ```
-  $> docker-compose -f docker-compose-artifactory.yml start
+  $> docker-compose -f docker-compose-artifactory.yml up
   Starting artifactory      ... done
   Starting concourse-db     ... done
   Starting concourse-web    ... done
@@ -21,6 +21,7 @@ Deploys and retrieves artifacts from a JFrog Artifactory server for a Concourse 
     * Artifactory:  http://localhost:8001/artifactory/webapp
       - Creds: admin / password
     * Concourse:    http://localhost:8080
+		- Creds: test / test
 
 4. Deploy the pipeline(s)
     * __pipeline-pivotal-resource__
