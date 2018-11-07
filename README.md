@@ -29,9 +29,19 @@ Deploys and retrieves artifacts from a JFrog Artifactory server for a Concourse 
     * __pipeline-springio-resource__
       - This pipeline uses [spring-io/artifactory-resource](https://github.com/spring-io/artifactory-resource)
 
+## Using SpringIO Artifactory Resource
 
+#### The `put` task
+* The input folder on the `put` task (e.g. "build") must match the output of the `build-file` task.
+* If using standard file layout in Artifactory
+  - The 'module_layout' must be set to "none", when using the regular file layout in Artifactory.
+  - The `strip_snapshot_timestamps` must be false
+* If using Maven folder structure under Artifactory
+  - set the `module_layout` to `maven`
+  - The `strip_snapshot_timestamps` must be true
 
 
 ## Credits / References
 
 *  https://github.com/pivotalservices/concourse-pipeline-samples/tree/master/pipelines/jfrog/artifactory-integration
+* https://github.com/spring-io/artifactory-resource
