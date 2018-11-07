@@ -1,5 +1,6 @@
-keys/*
 bin/*
+data/*
+keys/*
 !bin/.gitkeep
 .DS_Store
 .envrc

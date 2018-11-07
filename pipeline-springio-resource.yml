@@ -59,6 +59,13 @@ jobs:
   plan:
   - get: artifactory
     trigger: true
+    params:
+      repo: example-repo-local
+      build_number: "${BUILD_ID}"
+      folder: build
+      module_layout: none
+      strip_snapshot_timestamps: false
+      build_uri: "http://localhost:8080/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}"
     passed:
       - build-and-save-to-artifactory
   - task: use-new-file
@@ -70,14 +77,15 @@ jobs:
           repository: ubuntu
           tag: "latest"
       inputs:
-      - name: file-repository
+      - name: artifactory
       run:
         path: sh
         args:
         - -exc
         - |
           export DATESTRING=$(date +"%Y%m%d")
-          ls -la file-repository
-          cat ./file-repository/myapp*.txt
+          ls -lart
+          ls -lart artifactory
+          cat ./artifactory/myapp*.txt
           echo ""
-          cat ./file-repository/manifest.yml
+          cat ./artifactory/manifest.yml
